@@ -10,10 +10,12 @@ const formData = { ...formDataParseFromLS() };
 loadFormDataFromLS();
 
 refs.form.addEventListener('submit', onFormSubmit);
-refs.form.addEventListener('input', throttle(saveFormDataToLS, 250));
+refs.form.addEventListener('input', throttle(saveFormDataToLS, 500));
 
 function onFormSubmit(e) {
   e.preventDefault();
+
+  console.log(formData);
 
   e.currentTarget.reset();
   localStorage.removeItem(STORAGE_KEY);
@@ -24,10 +26,6 @@ function saveFormDataToLS(e) {
   localStorageSetItem();
 }
 
-function localStorageSetItem() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-}
-
 function loadFormDataFromLS() {
   if (!localStorage.getItem(STORAGE_KEY)) {
     return;
@@ -36,6 +34,10 @@ function loadFormDataFromLS() {
   const { email, message } = formDataParseFromLS();
   refs.email.value = email;
   refs.message.value = message;
+}
+
+function localStorageSetItem() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 }
 
 function formDataParseFromLS() {
