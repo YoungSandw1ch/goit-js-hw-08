@@ -6,7 +6,7 @@ const iframe = document.querySelector('#vimeo-player');
 const player = new Vimeo(iframe);
 
 player.on('timeupdate', throttle(saveTimeUpdateToLS, 1000));
-player.setCurrentTime(getTimeFromLS());
+player.setCurrentTime(getTimeFromLS() || 0);
 player.on('pause', logPausedTime);
 
 function saveTimeUpdateToLS(data) {
